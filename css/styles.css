@@ -1,0 +1,88 @@
+
+/*  Font APIs  */
+@import url("https://fonts.googleapis.com/css?family=Oswald");
+@import url("https://fonts.googleapis.com/css?family=Raleway");
+
+.sect {
+    font-family: Oswald;  
+    margin: 10px 17px;
+    /***/
+/*    border: 1.5px solid black; 
+    border-radius: 10px;*/
+}
+
+.header {
+    margin-left: 7px;
+}
+
+.para {
+    margin: 7px;
+}
+
+.plusMinus {
+    font-size: 24px;
+}
+            
+#flexContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#navList {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #D3D3D3;
+    font-family: Raleway;
+    transition: top 0.3s;
+}
+
+#sectionOne
+, #sectionTwo
+, #sectionThree {
+    height: 100vh;
+    /*height: 10vh;*/
+}
+
+body {
+    margin: 0;
+    padding-top: 50px;
+    height: 300vh;  
+}
+
+li {
+    float: left;
+}
+    
+li a {
+    display: block;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;    
+}
+
+@media (max-width: 700px){      
+    .flexContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;  
+    }
+    
+    #sectionOne
+    , #sectionTwo
+    , #sectionThree {
+        padding-top: 145px;
+    }
+    
+    li a {
+        padding: 14px 37vw;
+        width: 170px;
+    }
+}
+

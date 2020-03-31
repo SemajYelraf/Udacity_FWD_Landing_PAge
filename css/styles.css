@@ -6,9 +6,7 @@
 .sect {
     font-family: Oswald;  
     margin: 10px 17px;
-    /***/
-/*    border: 1.5px solid black; 
-    border-radius: 10px;*/
+    height: 100vh;
 }
 
 .header {
@@ -22,16 +20,17 @@
 .plusMinus {
     font-size: 24px;
 }
-            
-#flexContainer {
+
+.withBorder {
+    border: 1.5px solid red; 
+    border-radius: 10px;
+}
+
+.flexContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-}
-
-#navList {
     position: fixed;
-    top: 0;
     width: 100%;
     list-style-type: none;
     margin: 0;
@@ -42,17 +41,18 @@
     transition: top 0.3s;
 }
 
-#sectionOne
-, #sectionTwo
-, #sectionThree {
-    height: 100vh;
-    /*height: 10vh;*/
+.navShow {
+    top: 0;
+}
+
+.navHide {
+    top: -50px;    
 }
 
 body {
     margin: 0;
     padding-top: 50px;
-    height: 300vh;  
+    height: 415vh;  
 }
 
 li {
@@ -74,15 +74,24 @@ li a {
         align-items: center;  
     }
     
-    #sectionOne
-    , #sectionTwo
-    , #sectionThree {
-        padding-top: 145px;
+    .sect {
+        padding-top: 0px;
+    }
+    
+    .navHide {
+        top: -200px;    
+    }
+    
+    body {
+        margin-top: 145px;
+        padding-top: 50px;
+        height: 415vh;  
     }
     
     li a {
         padding: 14px 37vw;
         width: 170px;
     }
+   
 }
 

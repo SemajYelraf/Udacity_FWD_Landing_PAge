@@ -3,15 +3,16 @@
 function buildNavigation(){
     
     /** Build nav bar */
-    document.body.insertAdjacentHTML("afterbegin", "<ul class='flexContainer' id='navList'><li id='sect1'><a>Section One</a></li><li id='sect2'><a>Section Two</a></li><li id='sect3'><a>Section Three</a></li></ul>");
+    document.body.insertAdjacentHTML("afterbegin", "<ul class='flexContainer' id='navList'><li id='sect1'><a id='aSect1'>Section One</a></li><li id='sect2'><a id='aSect2'>Section Two</a></li><li id='sect3'><a id='aSect3'>Section Three</a></li><li id='sect4'><a id='aSect4'>Section Four</a></li></ul>");
     
-    /** Bring page to top position, hilite first item */
-    document.getElementById('sectionOne').scrollIntoView({behavior: 'smooth'});
-    document.getElementsByTagName('a')[0].style.backgroundColor = '#FF0000';
+    /** Hilite first item */
+    document.getElementsByTagName('a')[0].style.backgroundColor = '#FF0000'; // RED
     
     /** Hilite first section */
-    document.getElementsByTagName('section')[0].style.border = "1.5px solid red";
-    document.getElementsByTagName('section')[0].style.borderRadius = "10px";
+    document.getElementById('sectionOne').classList.add('withBorder');
+    
+    /** Show navigation */
+    document.getElementById('navList').classList.add('navShow');
     
 }
 
@@ -27,16 +28,17 @@ function addNavListener(){
 
 function setNavTimer(sectName){
     
-    if ( sectName === 'section two' ){
+    if ( sectName === 'section two' || sectName === 'section three' || sectName === 'section four'){
         
         setTimeout(function(){
-            document.getElementById('navList').style.top = "-50px";
+            document.getElementById('navList').classList.remove('navShow');
+            document.getElementById('navList').classList.add('navHide');
         }, 1000);
         
     } else {
 
         setTimeout(function(){
-            window.scrollTo(0,0);
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }, 500);
     }
     
@@ -64,20 +66,19 @@ function moveToSection(evt){
     
     const inactiveBgColor = '#D3D3D3'; // GREY
     const activeBgColor = '#FF0000';   // RED
-    
-    const activeBorder = "1.5px solid red";
-    const activeBorderRadius = "10px";
-    const inactiveBorder = "none";
 
     const navSectionOne = document.getElementsByTagName('a')[0];
     const navSectionTwo = document.getElementsByTagName('a')[1];
     const navSectionThree = document.getElementsByTagName('a')[2];
+    const navSectionFour = document.getElementsByTagName('a')[3];
     
     const firstSection = document.getElementsByClassName('sect')[0];
     const secondSection = document.getElementsByClassName('sect')[1];
     const thirdSection = document.getElementsByClassName('sect')[2];
+    const fourthSection = document.getElementsByClassName('sect')[3];
     
     let currentSection = '';
+    let yCoord = 0;
     
     target = evt.target.textContent.toLowerCase();
     
@@ -88,12 +89,13 @@ function moveToSection(evt){
         evt.target.style.backgroundColor = activeBgColor;
         navSectionTwo.style.backgroundColor = inactiveBgColor;
         navSectionThree.style.backgroundColor = inactiveBgColor;
+        navSectionFour.style.backgroundColor = inactiveBgColor;
         
-        firstSection.style.border = activeBorder;
-        firstSection.style.borderRadius = activeBorderRadius;
+        firstSection.classList.add('withBorder');
         
-        secondSection.style.border = inactiveBorder;
-        thirdSection.style.border = inactiveBorder;
+        secondSection.classList.remove('withBorder');
+        thirdSection.classList.remove('withBorder');
+        fourthSection.classList.remove('withBorder');
         
         setNavTimer(target);
         
@@ -104,30 +106,51 @@ function moveToSection(evt){
         evt.target.style.backgroundColor = activeBgColor;
         navSectionOne.style.backgroundColor = inactiveBgColor;
         navSectionThree.style.backgroundColor = inactiveBgColor;
+        navSectionFour.style.backgroundColor = inactiveBgColor;
 
-        secondSection.style.border = activeBorder;
-        secondSection.style.borderRadius = activeBorderRadius;
+        secondSection.classList.add('withBorder');
         
-        firstSection.style.border = inactiveBorder;
-        thirdSection.style.border = inactiveBorder;
+        firstSection.classList.remove('withBorder');
+        thirdSection.classList.remove('withBorder');
+        fourthSection.classList.remove('withBorder');
+        
+        setNavTimer(target);
+
+    } else if ( target === 'section three') {
+
+        currentSection = document.getElementById('sectionThree');
+        
+        evt.target.style.backgroundColor = activeBgColor;
+        navSectionOne.style.backgroundColor = inactiveBgColor;
+        navSectionTwo.style.backgroundColor = inactiveBgColor;
+        navSectionFour.style.backgroundColor = inactiveBgColor;
+        
+        thirdSection.classList.add('withBorder');
+        
+        firstSection.classList.remove('withBorder');
+        secondSection.classList.remove('withBorder');
+        fourthSection.classList.remove('withBorder');
         
         setNavTimer(target);
 
     } else {
 
-        currentSection = document.getElementById('sectionThree');
+        currentSection = document.getElementById('sectionFour');
         
         if (evt.target.id !== 'navList') {
         
             evt.target.style.backgroundColor = activeBgColor;
             navSectionOne.style.backgroundColor = inactiveBgColor;
             navSectionTwo.style.backgroundColor = inactiveBgColor;
+            navSectionThree.style.backgroundColor = inactiveBgColor;
             
-            thirdSection.style.border = activeBorder;
-            thirdSection.style.borderRadius = activeBorderRadius;
+            fourthSection.classList.add('withBorder');
             
-            firstSection.style.border = inactiveBorder;
-            secondSection.style.border = inactiveBorder;
+            firstSection.classList.remove('withBorder');
+            secondSection.classList.remove('withBorder');
+            thirdSection.classList.remove('withBorder');
+            
+            setNavTimer(target);
 
         }
         
@@ -136,7 +159,7 @@ function moveToSection(evt){
     if (evt.target.id !== 'navList') {
 
         currentSection.scrollIntoView({behavior: 'smooth'});
-        
+     
     }
 }
 
@@ -149,14 +172,49 @@ function addScrollListener(){
         
         let currPos = window.pageYOffset;
         if ( prevPos > currPos){
-            document.getElementById('navList').style.top = "0";
+            document.getElementById('navList').classList.remove('navHide');
+            document.getElementById('navList').classList.add('navShow');
         } else {
-            document.getElementById('navList').style.top = "-50px";            
+            document.getElementById('navList').classList.remove('navShow');
+            document.getElementById('navList').classList.add('navHide');
         }
         
         prevPos = currPos;
     })
     
+}
+
+/**********************************************************************************************/
+
+function addPagePostionListener(){
+ 
+    const sectionOne = document.getElementById('sectionOne');
+    const sectionTwo = document.getElementById('sectionTwo');
+    const sectionThree = document.getElementById('sectionThree');
+    const sectionFour = document.getElementById('sectionFour');
+    
+    window.addEventListener('scroll', () => {
+    
+        let lastPagePosition = window.pageYOffset;    
+        setTimeout( () => {
+            if ( lastPagePosition <= 600 ){
+                sectionOne.classList.add('withBorder');
+                sectionTwo.classList.remove('withBorder');
+            } else if ( lastPagePosition >= 651 && lastPagePosition <= 1250 ) {
+                sectionOne.classList.remove('withBorder');
+                sectionTwo.classList.add('withBorder');
+                sectionThree.classList.remove('withBorder');
+            } else if ( lastPagePosition >= 1251 && lastPagePosition <= 1800 ) {
+                sectionTwo.classList.remove('withBorder');
+                sectionThree.classList.add('withBorder');
+                sectionFour.classList.remove('withBorder');
+            } else {
+                sectionThree.classList.remove('withBorder');
+                sectionFour.classList.add('withBorder');
+            }
+        }, 500);
+            
+    })
 }
 
 /**********************************************************************************************/
@@ -202,6 +260,7 @@ function addExpandCollapseListener(){
 
 /** Functions to be executed ******************************************************************/
 
+addPagePostionListener();
 addPageLoadListener();
 buildNavigation();
 addNavListener();
